@@ -25,11 +25,14 @@ def snake_game(sp):
     timer = 0
     game_over = False
 
+
     def gameover():
         over_text = font_64.render("GAME OVER", True, (255, 255, 255))
         screen.blit(over_text, (250, 230))
         scr_text = font_64.render("FINAL SCORE: " + str(score), True, (255, 255, 255))
         screen.blit(scr_text, (250, 330))
+
+
     def pause():
         pause = True
         while pause:
@@ -57,6 +60,7 @@ def snake_game(sp):
     game_over=False
     apple_pos = [260, 300]
     mainmenu=False
+    pauseTxt= True
     running = True
     while running:
         screen.fill((180, 100, 100))
@@ -106,18 +110,22 @@ def snake_game(sp):
         for i in range(1, len(snake_pos)):
             if snake_pos[i] == snake_pos[0]:
                 game_over = True
+
+        if pauseTxt:
+            p_text = font.render("Press p to Pause", True, (255, 255, 255))
+            screen.blit(p_text, (320, 10))
+
+
         if game_over:
+            screen.fill((100,200,100))
             for i in range(len(snake_pos)):
                 snake_pos[i][0]=2000
             apple_pos=[2000,2000]
+            pauseTxt=False
             gameover()
             print(score)
 
-        if pause == 1:
-            time.sleep()
 
-        esc_text = font.render("Press p to Pause", True, (255, 255, 255))
-        screen.blit(esc_text, (320, 10))
 
         for x, y in snake_pos:
             pygame.draw.circle(screen, (0, 0, 255), (x, y), 10)
