@@ -30,6 +30,26 @@ def snake_game(sp):
         screen.blit(over_text, (250, 230))
         scr_text = font_64.render("FINAL SCORE: " + str(score), True, (255, 255, 255))
         screen.blit(scr_text, (250, 330))
+    def pause():
+        pause = True
+        while pause:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_c:
+                        pause = False
+                    elif event.key == pygame.K_q:
+                        pygame.quit()
+                        quit()
+            screen.fill((0,0,0))
+            pause_text = font_64.render("Game Paused", True, (255, 255, 255))
+            screen.blit(pause_text, (250, 230))
+            pauseText = font_32.render("Press c to continue or q to Quit", True, (255,255,255))
+            screen.blit(pauseText, (150, 330))
+            clock.tick(5)
+            pygame.display.update()
 
 
     score = 0
@@ -57,8 +77,8 @@ def snake_game(sp):
                 if event.key == pygame.K_RIGHT:
                     print("RIGHT")
                     direction = right
-                if event.key == pygame.K_ESCAPE:
-                    mainmenu = True
+                if event.key == pygame.K_p:
+                    pause()
 
         timer += 1
         if timer == 5:
@@ -93,11 +113,10 @@ def snake_game(sp):
             gameover()
             print(score)
 
-        if mainmenu:
-            running=False
-            Mainrunning = True
+        if pause == 1:
+            time.sleep()
 
-        esc_text = font.render("Press ESC for Main Menu", True, (255, 255, 255))
+        esc_text = font.render("Press p to Pause", True, (255, 255, 255))
         screen.blit(esc_text, (320, 10))
 
         for x, y in snake_pos:
